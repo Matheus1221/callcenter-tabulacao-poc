@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  asterisk:
+    image: andrius/asterisk:alpine-develop
+    container_name: asterisk-poc
+    restart: unless-stopped
+    ports:
+      # SIP (sinalização) - UDP
+      - "5060:5060/udp"
+      # RTP (áudio) - range de portas
+      - "10000-10100:10000-10100/udp"
+      # AMI - Asterisk Manager Interface (é AQUI que seu Node vai conectar)
+      - "5038:5038/tcp"
+    volumes:
+      - ./config/pjsip.conf:/etc/asterisk/pjsip.conf
+      - ./config/extensions.conf:/etc/asterisk/extensions.conf
+      - ./config/manager.conf:/etc/asterisk/manager.conf
+    networks:
+      - callcenter
+
+networks:
+  callcenter:
+    driver: bridge
