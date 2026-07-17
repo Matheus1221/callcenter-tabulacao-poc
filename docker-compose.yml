@@ -1,8 +1,6 @@
-version: "3.8"
-
 services:
   asterisk:
-    image: andrius/asterisk:alpine-develop
+    image: andrius/asterisk:stable
     container_name: asterisk-poc
     restart: unless-stopped
     ports:
